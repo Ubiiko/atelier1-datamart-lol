@@ -51,3 +51,4 @@ Les statistiques détaillées par joueur et par partie sont stockées dans parti
 Enfin, la table ranks conserve les informations de classement des joueurs en SoloQ et Flex.
 
 Ce modèle sert de base à la création du Data Mart et aux analyses ultérieures.
+<img width="734" height="1021" alt="modele" src="https://github.com/user-attachments/assets/0eae534e-344c-4836-b0eb-414e79c14291" />
