@@ -32,7 +32,7 @@ Docker Desktop et Python 3.10+
 Placer le fichier CSV dans le dossier `./data/`
 
 ### 2. Démarrage de l’infrastructure
-```bash
+
 docker compose up -d
 
 ### 3. Exécution de l’ETL  
