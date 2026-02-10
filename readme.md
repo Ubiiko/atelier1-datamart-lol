@@ -52,3 +52,62 @@ Enfin, la table ranks conserve les informations de classement des joueurs en Sol
 
 Ce modèle sert de base à la création du Data Mart et aux analyses ultérieures.
 <img width="734" height="1021" alt="modele" src="https://github.com/user-attachments/assets/0eae534e-344c-4836-b0eb-414e79c14291" />
+erDiagram
+    FACT_GAME_PARTICIPATION {
+        int time_sk
+        int player_sk
+        int champion_sk
+        int map_sk
+        int game_mode_sk
+        boolean win
+        int kills
+        int deaths
+        int assists
+        int total_damage_dealt
+        int gold_earned
+        int game_duration
+    }
+
+    DIM_TIME {
+        int time_sk
+        date date
+        int day
+        int month
+        int year
+        string day_of_week
+        boolean is_weekend
+    }
+
+    DIM_PLAYER {
+        int player_sk
+        string summoner_id
+        string summoner_name
+        string rank
+        string tier
+    }
+
+    DIM_CHAMPION {
+        int champion_sk
+        int champion_id
+        string champion_name
+        string champion_class
+    }
+
+    DIM_MAP {
+        int map_sk
+        int map_id
+        string map_name
+    }
+
+    DIM_GAME_MODE {
+        int game_mode_sk
+        string queue_type
+        string game_mode
+    }
+
+    FACT_GAME_PARTICIPATION }o--|| DIM_TIME : time_sk
+    FACT_GAME_PARTICIPATION }o--|| DIM_PLAYER : player_sk
+    FACT_GAME_PARTICIPATION }o--|| DIM_CHAMPION : champion_sk
+    FACT_GAME_PARTICIPATION }o--|| DIM_MAP : map_sk
+    FACT_GAME_PARTICIPATION }o--|| DIM_GAME_MODE : game_mode_sk
+
