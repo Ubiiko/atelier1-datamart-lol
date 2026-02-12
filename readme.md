@@ -51,7 +51,203 @@ Les statistiques détaillées par joueur et par partie sont stockées dans parti
 Enfin, la table ranks conserve les informations de classement des joueurs en SoloQ et Flex.
 
 Ce modèle sert de base à la création du Data Mart et aux analyses ultérieures.
-<img width="734" height="1021" alt="modele" src="https://github.com/user-attachments/assets/0eae534e-344c-4836-b0eb-414e79c14291" />
+```mermaid
+erDiagram
+  GAME_VERSIONS {
+    INT version_id PK
+    TEXT version_string UK
+  }
+  
+  GAME_MODES {
+    INT mode_id PK
+    TEXT mode_name UK "CLASSIC, ARAM, SWIFTPLAY"
+  }
+  
+  GAME_TYPES {
+    INT type_id PK
+    TEXT type_name UK "MATCHED_GAME"
+  }
+  
+  QUEUE_TYPES {
+    INT queue_id PK
+    TEXT queue_name
+    TEXT queue_description
+  }
+  
+  MAPS {
+    INT map_id PK
+    TEXT map_name "11: Summoner's Rift, 12: ARAM"
+  }
+  
+  GAMES {
+    BIGINT game_id PK
+    TIMESTAMP game_start_utc
+    INT game_duration
+    INT version_id FK
+    INT mode_id FK
+    INT type_id FK
+    INT queue_id FK
+    INT map_id FK
+    TEXT platform_id "EUN1 - pas de table séparée"
+  }
+  
+  CHAMPIONS {
+    INT champion_id PK
+    TEXT champion_name UK
+  }
+  
+  SUMMONERS {
+    TEXT puuid PK
+    TEXT summoner_id
+    TEXT summoner_name
+    INT summoner_level
+  }
+  
+  PARTICIPANTS {
+    BIGINT game_id PK,FK
+    INT participant_id PK
+    TEXT puuid FK
+    INT champion_id FK
+    INT team_id "100 ou 200"
+    BOOLEAN win
+    TEXT individual_position "TOP, JUNGLE, MIDDLE, BOTTOM, UTILITY, Invalid"
+    TEXT team_position
+    TEXT lane
+    TEXT role
+  }
+  
+  PARTICIPANT_STATS {
+    BIGINT game_id PK,FK
+    INT participant_id PK,FK
+    INT kills
+    INT deaths
+    INT assists
+    INT baron_kills
+    INT dragon_kills
+    INT gold_earned
+    INT gold_spent
+    INT vision_score
+    INT wards_placed
+    INT wards_killed
+    INT vision_wards_bought
+  }
+  
+  PARTICIPANT_DAMAGE {
+    BIGINT game_id PK,FK
+    INT participant_id PK,FK
+    BIGINT total_damage_dealt
+    BIGINT total_damage_to_champions
+    BIGINT physical_damage_to_champions
+    BIGINT magic_damage_to_champions
+    BIGINT true_damage_to_champions
+    BIGINT damage_to_objectives
+    BIGINT damage_to_turrets
+    BIGINT total_damage_taken
+    BIGINT physical_damage_taken
+    BIGINT magic_damage_taken
+    BIGINT true_damage_taken
+    INT time_ccing_others
+  }
+  
+  PARTICIPANT_ITEMS {
+    BIGINT game_id PK,FK
+    INT participant_id PK,FK
+    INT item0
+    INT item1
+    INT item2
+    INT item3
+    INT item4
+    INT item5
+    INT item6
+  }
+  
+  PARTICIPANT_RANKED_SOLO {
+    BIGINT game_id PK,FK
+    INT participant_id PK,FK
+    TEXT solo_tier "IRON, BRONZE, SILVER, GOLD, PLATINUM, DIAMOND, MASTER, GRANDMASTER, CHALLENGER"
+    TEXT solo_rank "I, II, III, IV"
+    INT solo_lp
+    INT solo_wins
+    INT solo_losses
+  }
+  
+  PARTICIPANT_RANKED_FLEX {
+    BIGINT game_id PK,FK
+    INT participant_id PK,FK
+    TEXT flex_tier
+    TEXT flex_rank
+    INT flex_lp
+    INT flex_wins
+    INT flex_losses
+  }
+  
+  PARTICIPANT_CHAMPION_MASTERY {
+    BIGINT game_id PK,FK
+    INT participant_id PK,FK
+    INT mastery_level
+    INT mastery_points
+    BIGINT mastery_lastPlayTime
+    TIMESTAMP mastery_lastPlayTime_utc
+    INT points_since_last_level
+    INT points_until_next_level
+    INT tokens_earned
+  }
+  
+  PARTICIPANT_FINAL_STATS {
+    BIGINT game_id PK,FK
+    INT participant_id PK,FK
+    INT ability_haste
+    INT ability_power
+    INT armor
+    INT armor_pen
+    INT armor_pen_percent
+    INT attack_damage
+    INT attack_speed
+    INT health
+    INT health_max
+    INT health_regen
+    INT magic_resist
+    INT movement_speed
+    INT power
+    INT power_max
+    INT power_regen
+  }
+
+  %% Relations tables de référence vers GAMES
+  GAME_VERSIONS ||--o{ GAMES : "version_id"
+  GAME_MODES ||--o{ GAMES : "mode_id"
+  GAME_TYPES ||--o{ GAMES : "type_id"
+  QUEUE_TYPES ||--o{ GAMES : "queue_id"
+  MAPS ||--o{ GAMES : "map_id"
+  
+  %% Relations GAMES vers PARTICIPANTS
+  GAMES ||--o{ PARTICIPANTS : "game_id"
+  SUMMONERS ||--o{ PARTICIPANTS : "puuid"
+  CHAMPIONS ||--o{ PARTICIPANTS : "champion_id"
+  
+  %% Relations PARTICIPANTS vers tables de stats
+  PARTICIPANTS ||--|| PARTICIPANT_STATS : "(game_id, participant_id)"
+  PARTICIPANTS ||--|| PARTICIPANT_DAMAGE : "(game_id, participant_id)"
+  PARTICIPANTS ||--|| PARTICIPANT_ITEMS : "(game_id, participant_id)"
+  PARTICIPANTS ||--|| PARTICIPANT_RANKED_SOLO : "(game_id, participant_id)"
+  PARTICIPANTS ||--|| PARTICIPANT_RANKED_FLEX : "(game_id, participant_id)"
+  PARTICIPANTS ||--|| PARTICIPANT_CHAMPION_MASTERY : "(game_id, participant_id)"
+  PARTICIPANTS ||--|| PARTICIPANT_FINAL_STATS : "(game_id, participant_id)"
+```
+
+**Notes de conception :**
+
+1. **Type, Mode et Version** : Chacun a sa propre table séparée (GAME_TYPES, GAME_MODES, GAME_VERSIONS) car il n'y a pas de lien fonctionnel entre eux
+
+2. **platform_id** : Directement dans la table GAMES sans table séparée, car une seule valeur existe dans le dataset (EUN1)
+
+3. **Queue-type** : Table dédiée QUEUE_TYPES comme demandé, avec queue_id comme clé primaire
+
+4. **Normalisation 3NF** : 
+   - Séparation des données en tables thématiques
+   - Élimination de la redondance
+   - Clés composites (game_id, participant_id) pour les statistiques des participants
+
 
 ## Table de faits
 ```fact_game_participation ```
