@@ -412,7 +412,6 @@ docker compose ps
 ```
 NAME              IMAGE                           STATUS
 lol_dozzle        amir20/dozzle:latest           Up
-lol_jupyter       jupyter/scipy-notebook:latest  Up
 lol_metabase      metabase/metabase:latest       Up
 lol_postgres      postgres:15                    Up (healthy)
 ```
@@ -423,7 +422,6 @@ Vérifier l'accès aux différentes interfaces :
 
 | Service | URL | Accès |
 |---------|-----|-------|
-| **Jupyter Notebook** | http://localhost:8888 | ETL et transformation |
 | **Metabase** | http://localhost:33000 | Dashboards BI |
 | **Dozzle** | http://localhost:8080 | Logs centralisés |
 | **PostgreSQL** | localhost:5432 | Base de données |
@@ -440,21 +438,6 @@ Vérifier l'accès aux différentes interfaces :
    - **Database :** lol_datamart
    - **Utilisateur :** lol_user
    - **Mot de passe :** lol_password
-
-### Étape 5 : Exécution de l'ETL
-
-1. Ouvrir Jupyter Notebook : http://localhost:8888
-2. Naviguer vers `work/etl.ipynb`
-3. Exécuter toutes les cellules du notebook
-4. Vérifier que toutes les tables sont créées dans PostgreSQL
-
-**Ordre d'exécution :**
-- Import des données RAW
-- Nettoyage et transformation
-- Création du modèle relationnel
-- Création du Data Mart (schéma en étoile)
-
----
 
 ## Valeurs Configurables
 
@@ -473,7 +456,6 @@ environment:
 ports:
   - "5432:5432"   # PostgreSQL
   - "3000:3000"   # Metabase
-  - "8888:8888"   # Jupyter
   - "8080:8080"   # Dozzle
 ```
 
@@ -644,8 +626,6 @@ dozzle:
 Les logs sont filtrés pour n'afficher que les conteneurs du projet :
 - `lol_postgres` - Logs de la base de données
 - `lol_metabase` - Logs de Metabase
-- `lol_jupyter` - Logs de Jupyter Notebook
-
 ---
 
 ## Reproduction d'une Erreur Type via Dozzle
@@ -822,15 +802,7 @@ docker system prune -a
    ```
 3. Vérifier les credentials dans docker-compose.yml
 
-### Problème 3 : Jupyter ne trouve pas les librairies
-
-**Solution :**
-```bash
-# Réinstaller les dépendances
-docker exec -it lol_jupyter pip install -r /tmp/requirements.txt
-```
-
-### Problème 4 : Dozzle n'affiche aucun log
+### Problème 3 : Dozzle n'affiche aucun log
 
 **Solutions :**
 1. Vérifier que le conteneur a le bon label :
