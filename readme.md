@@ -151,9 +151,8 @@ erDiagram
 
 
 ```
-Atelier 3
 
-## 🏗️ Architecture Technique
+## Architecture Technique
 
 | Composant | Technologie | Rôle |
 |-----------|-------------|------|
@@ -165,7 +164,7 @@ Atelier 3
 
 ---
 
-## 📋 Prérequis d'Installation
+## Prérequis d'Installation
 
 ### Logiciels Requis
 
@@ -198,7 +197,7 @@ Atelier 3
 
 ---
 
-## 🚀 Procédure de Lancement Complet de la Stack
+## Procédure de Lancement Complet de la Stack
 
 ### Étape 1 : Préparation des Données
 
@@ -272,7 +271,7 @@ Vérifier l'accès aux différentes interfaces :
 
 ---
 
-## ⚙️ Valeurs Configurables
+## Valeurs Configurables
 
 ### Configuration Docker Compose
 
@@ -293,7 +292,7 @@ ports:
   - "8080:8080"   # Dozzle
 ```
 
-⚠️ **Important :** Si vous modifiez les ports, pensez à mettre à jour :
+**Important :** Si vous modifiez les ports, pensez à mettre à jour :
 - Les URLs d'accès aux services
 - Les chaînes de connexion dans le code ETL
 - La configuration Metabase
@@ -310,7 +309,7 @@ logging:
 
 ---
 
-## 🔍 Points de Vigilance pour l'Ajout de Services
+## Points de Vigilance pour l'Ajout de Services
 
 ### 1. Réseau Docker
 
@@ -390,7 +389,7 @@ volumes:
 
 ### 7. Sécurité
 
-- ⚠️ **NE JAMAIS** commiter de mots de passe en clair
+- **NE JAMAIS** commiter de mots de passe en clair
 - Utiliser un fichier `.env` pour les secrets :
 
 ```bash
@@ -406,18 +405,18 @@ environment:
 
 ---
 
-## 📊 Étape 3 : Centralisation des Logs avec Dozzle
+## Étape 3 : Centralisation des Logs avec Dozzle
 
 ### Présentation de Dozzle
 
 **Dozzle** est une interface web légère pour visualiser les logs Docker en temps réel.
 
 **Avantages :**
-- ✅ Zéro configuration
-- ✅ Interface moderne et réactive
-- ✅ Recherche et filtrage en temps réel
-- ✅ Pas de base de données externe requise
-- ✅ Lecture seule (sécurité)
+- Zéro configuration
+- Interface moderne et réactive
+- Recherche et filtrage en temps réel
+- Pas de base de données externe requise
+- Lecture seule (sécurité)
 
 ### Configuration
 
@@ -464,7 +463,7 @@ Les logs sont filtrés pour n'afficher que les conteneurs du projet :
 
 ---
 
-## 🐛 Reproduction d'une Erreur Type via Dozzle
+## Reproduction d'une Erreur Type via Dozzle
 
 ### Scénario : Échec de Connexion à la Base de Données
 
@@ -554,7 +553,7 @@ Metabase Initialization COMPLETE
 
 ---
 
-## 📁 Structure du Projet
+## Structure du Projet
 
 ```
 atelier1-datamart-lol/
@@ -568,7 +567,7 @@ atelier1-datamart-lol/
 
 ---
 
-## 🛠️ Commandes Utiles
+## Commandes Utiles
 
 ### Gestion des Conteneurs
 
@@ -614,7 +613,7 @@ docker exec -i lol_postgres psql -U lol_user lol_datamart < backup_20260212.sql
 
 ---
 
-## ⚠️ Troubleshooting
+## Troubleshooting
 
 ### Problème 1 : Les conteneurs ne démarrent pas
 
@@ -668,7 +667,7 @@ docker exec -it lol_jupyter pip install -r /tmp/requirements.txt
 
 ---
 
-## 📚 Ressources
+## Ressources
 
 - [Documentation Docker Compose](https://docs.docker.com/compose/)
 - [Documentation PostgreSQL](https://www.postgresql.org/docs/)
