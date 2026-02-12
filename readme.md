@@ -494,10 +494,7 @@ docker compose up -d metabase
 
 **Exemple de log d'erreur pour un mauvais mot de passe :**
 
-```
 <img width="1579" height="798" alt="image" src="https://github.com/user-attachments/assets/7fa41d6d-9627-42c9-bccd-7bf30f8e284f" />
-
-```
 
 #### 3. Capturer les Logs pour Documentation
 
