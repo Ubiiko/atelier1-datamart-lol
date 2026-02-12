@@ -492,20 +492,11 @@ docker compose up -d metabase
 2. Sélectionner le conteneur `lol_metabase`
 3. Observer les logs d'erreur
 
-**Exemple de log d'erreur attendu :**
+**Exemple de log d'erreur pour un mauvais mot de passe :**
 
 ```
-2026-02-12 12:34:56 ERROR metabase.driver.postgres :: 
-Failed to connect to database: lol_datamart
+<img width="1579" height="798" alt="image" src="https://github.com/user-attachments/assets/7fa41d6d-9627-42c9-bccd-7bf30f8e284f" />
 
-org.postgresql.util.PSQLException: FATAL: password authentication failed for user "lol_user"
-	at org.postgresql.core.v3.ConnectionFactoryImpl.doAuthentication(ConnectionFactoryImpl.java:646)
-	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:180)
-	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:235)
-	...
-
-2026-02-12 12:34:56 WARN metabase.core :: 
-Database connection check failed. Retrying in 10 seconds...
 ```
 
 #### 3. Capturer les Logs pour Documentation
