@@ -430,7 +430,7 @@ Vérifier l'accès aux différentes interfaces :
 
 ### Étape 4 : Configuration Initiale de Metabase
 
-1. Accéder à http://localhost:3000
+1. Accéder à http://localhost:33000
 2. Créer un compte administrateur
 3. Configurer la connexion à PostgreSQL :
    - **Type :** PostgreSQL
