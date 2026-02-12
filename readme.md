@@ -42,15 +42,19 @@ Celui-ci automatise l’importation des données (RAW), la transformation relati
 ### 4. Modèle relationnel
 Le modèle relationnel permet d’organiser les données League of Legends de manière normalisée et cohérente.
 
-La table games contient les informations générales des parties.
-La table summoners stocke les données des joueurs, tandis que champions référence les champions joués.
+**Notes de conception :**
 
-La table participants fait le lien entre une partie, un joueur et un champion, et décrit le contexte de jeu (rôle, équipe, victoire).
-Les statistiques détaillées par joueur et par partie sont stockées dans participant_stats.
+1. **Type, Mode et Version** : Chacun a sa propre table séparée (GAME_TYPES, GAME_MODES, GAME_VERSIONS) car il n'y a pas de lien fonctionnel entre eux
 
-Enfin, la table ranks conserve les informations de classement des joueurs en SoloQ et Flex.
+2. **platform_id** : Directement dans la table GAMES sans table séparée, car une seule valeur existe dans le dataset (EUN1)
 
-Ce modèle sert de base à la création du Data Mart et aux analyses ultérieures.
+3. **Queue-type** : Table dédiée QUEUE_TYPES comme demandé, avec queue_id comme clé primaire
+
+4. **Normalisation 3NF** : 
+   - Séparation des données en tables thématiques
+   - Élimination de la redondance
+   - Clés composites (game_id, participant_id) pour les statistiques des participants
+
 ```mermaid
 erDiagram
   GAME_VERSIONS {
@@ -234,21 +238,6 @@ erDiagram
   PARTICIPANTS ||--|| PARTICIPANT_CHAMPION_MASTERY : "(game_id, participant_id)"
   PARTICIPANTS ||--|| PARTICIPANT_FINAL_STATS : "(game_id, participant_id)"
 ```
-
-**Notes de conception :**
-
-1. **Type, Mode et Version** : Chacun a sa propre table séparée (GAME_TYPES, GAME_MODES, GAME_VERSIONS) car il n'y a pas de lien fonctionnel entre eux
-
-2. **platform_id** : Directement dans la table GAMES sans table séparée, car une seule valeur existe dans le dataset (EUN1)
-
-3. **Queue-type** : Table dédiée QUEUE_TYPES comme demandé, avec queue_id comme clé primaire
-
-4. **Normalisation 3NF** : 
-   - Séparation des données en tables thématiques
-   - Élimination de la redondance
-   - Clés composites (game_id, participant_id) pour les statistiques des participants
-
-
 ## Table de faits
 ```fact_game_participation ```
 Cette table représente la performance d’un joueur dans une partie.
