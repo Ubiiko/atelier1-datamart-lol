@@ -150,6 +150,7 @@ erDiagram
     FACT_GAME_PARTICIPATION }o--|| DIM_GAME_MODE : game_mode_sk
 
 
+```
 Atelier 3
 
 ## 🏗️ Architecture Technique
