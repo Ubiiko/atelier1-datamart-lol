@@ -239,7 +239,7 @@ Vérifier l'accès aux différentes interfaces :
 | Service | URL | Accès |
 |---------|-----|-------|
 | **Jupyter Notebook** | http://localhost:8888 | ETL et transformation |
-| **Metabase** | http://localhost:3000 | Dashboards BI |
+| **Metabase** | http://localhost:33000 | Dashboards BI |
 | **Dozzle** | http://localhost:8080 | Logs centralisés |
 | **PostgreSQL** | localhost:5432 | Base de données |
 
