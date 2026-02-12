@@ -53,6 +53,42 @@ Enfin, la table ranks conserve les informations de classement des joueurs en Sol
 Ce modèle sert de base à la création du Data Mart et aux analyses ultérieures.
 <img width="734" height="1021" alt="modele" src="https://github.com/user-attachments/assets/0eae534e-344c-4836-b0eb-414e79c14291" />
 
+## Table de faits
+```fact_game_participation ```
+Cette table représente la performance d’un joueur dans une partie.
+Granularité :1 ligne = 1 joueur dans 1 partie.
+
+Mesures principales :
+```
+win  
+kills  
+deaths  
+assists  
+total_damage_dealt  
+gold_earned  
+game_duration
+```
+
+Cette structure permet de calculer des indicateurs tels que le taux de victoire, le KDA moyen ou la durée moyenne des parties.
+
+## Dimensions
+Le modèle comporte cinq dimensions :
+```
+dim_time : analyse temporelle (jour, mois, année, week-end)
+dim_player : informations sur le joueur (identité, rang, tier)
+dim_champion : caractéristiques du champion (nom, classe)
+dim_map : carte jouée
+dim_game_mode : type et mode de jeu
+```
+Ces dimensions permettent d’analyser les performances selon différents axes métier.
+
+# Exemple de question métier
+Ce modèle permet de répondre à des questions telles que :
+
+Quel est le taux de victoire par classe de champion sur une carte donnée durant le week-end ?
+
+La table de faits fournit la mesure win, tandis que les dimensions permettent la segmentation par temps, champion et carte.
+
 ```mermaid
 erDiagram
     FACT_GAME_PARTICIPATION {
