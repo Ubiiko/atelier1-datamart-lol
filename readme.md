@@ -657,6 +657,13 @@ docker compose up -d metabase
 2. Sélectionner le conteneur `lol_metabase`
 3. Observer les logs d'erreur
 
+#### 3. Capturer les Logs pour Documentation
+
+**Dans Dozzle :**
+1. Rechercher "ERROR" ou "password authentication"
+2. Copier les logs pertinents
+3. Screenshot de l'interface
+
 **Exemple de log pour une authentification réussi sur MetaBase:**
 
 <img width="1579" height="798" alt="image" src="https://github.com/user-attachments/assets/7fa41d6d-9627-42c9-bccd-7bf30f8e284f" />
@@ -665,13 +672,6 @@ docker compose up -d metabase
 **Exemple de log d'erreur pour un mauvais mot de passe :**
 
 <img width="1529" height="216" alt="image" src="https://github.com/user-attachments/assets/3f93ab16-68b5-4cb4-a8e0-98a6dd42b144" />
-
-#### 3. Capturer les Logs pour Documentation
-
-**Dans Dozzle :**
-1. Rechercher "ERROR" ou "password authentication"
-2. Copier les logs pertinents
-3. Screenshot de l'interface
 
 **Via CLI :**
 ```bash
